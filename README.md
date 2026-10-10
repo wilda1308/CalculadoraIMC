@@ -158,15 +158,3 @@ INICIO
   MOSTRAR imagen y mensaje de la categoría
 FIN
 ```
-
----
-
-## 6. Observaciones y posibles mejoras
-
-- La ruta de las imágenes se arma como `/Assets/Images/imc/...` (con `/` inicial). Si el proyecto se abre como archivo local (sin servidor) o desde una subcarpeta, las imágenes pueden no cargar; con ruta relativa (`Assets/Images/imc/...`) funciona en ambos casos.
-- El icono del encabezado y el *favicon* se cargan desde una URL externa (Google Play), por lo que requieren internet.
-- Los cinco `if` de clasificación son independientes; se podría usar `if / else if` para mayor claridad.
-- Un comentario del código dice "Obesidad III" en el caso de Obesidad IV; es solo un error de comentario, el mensaje y la imagen sí son los de Obesidad IV.
-- El `<footer>` está fuera del `<body>` (después de `</body>`); lo correcto es ubicarlo dentro.
-- Mejoras posibles: pedir edad, sexo y nivel de actividad para personalizar más la rutina y la dieta, y guardar el historial de cada paciente.
-- El IMC es un indicador **orientativo** (no distingue masa muscular de grasa). En un entorno médico real las recomendaciones deben ser **validadas por un profesional de la salud**.

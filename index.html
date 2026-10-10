@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+    <head>
+        <meta charset = "UTF-8">
+        <link rel = "stylesheet" href="styles.css">
+        <title>Calculadora IMC</title>
+        <link rel="shortcut icon" href="https://play-lh.googleusercontent.com/3M-0HWMkN3NqnVwCZbVEP7akPU12YfSWJzAK89wipupXWcp8wH5wXL64LaZ2yJjI9MNrweuPQHmm66JyC7sPtA">
+    </head>
+    <body>
+        <header>
+            <h1>Calculadora de Indice de Masa Corporal (IMC)</h1>
+            <img src="https://play-lh.googleusercontent.com/3M-0HWMkN3NqnVwCZbVEP7akPU12YfSWJzAK89wipupXWcp8wH5wXL64LaZ2yJjI9MNrweuPQHmm66JyC7sPtA" alt="IconoIMC" width="60">
+        </header>
+        <main>
+            <section>
+                <h2>Ven y conoce tu IMC</h2>
+                <div id = "container_calcImc">
+                        <div>
+                            <!--
+                                Los labels nos dan descripción de lo que se digita en el campo.
+                            -->
+                            <label>Peso:</label>
+                            <!--
+                                En los inputs están estos atributos:
+                                - type: Tipo de campo "numerico, texto, fecha,  email, telefono, etc".
+                                -placeholder: lo que se ve dentro del campo y que desaparece al insertar un valor.
+                                -min: El valor minimo que puede aceptar (se usa especificamente para las flechas).
+                                -id: Selector para darle estilos especificos solo a ese input.
+                                -class: Selector para darle estilos a los que contengan esa clase pueden ser varios inputs o varios elementos.
+                            -->
+                            <input type="number" placeholder = "kg" class="input_imc" id="inputPeso" min="0">
+                        </div>
+                        <div>
+                            <!--
+                                Los labels nos dan descripción de lo que se digita en el campo.
+                            -->
+                            <label>Altura:</label>
+                            <!--
+                                En los inputs están estos atributos:
+                                - type: Tipo de campo "numerico, texto, fecha,  email, telefono, etc".
+                                -placeholder: lo que se ve dentro del campo y que desaparece al insertar un valor.
+                                -min: El valor minimo que puede aceptar (se usa especificamente para las flechas).
+                                -id: Selector para darle estilos especificos solo a ese input.
+                                -class: Selector para darle estilos a los que contengan esa clase pueden ser varios inputs o varios elementos.
+                            -->
+                            <input type="number" placeholder = "mts" class="input_imc" id="inputAltura" min="0">
+                        </div>
+                </div>
+                <br>
+                <div id = "contenedor_btnImc">
+                    <button id = "btn_calcularImc">Calcular IMC</button>
+                </div>
+
+                <!--
+                    Contenedores vacios para agregar información del resultado del calculo de IMC.
+                -->
+                <div id = "resultado_imc"></div>
+            </section>
+        </main>
+    </body>
+    <footer>
+        <!--
+            &COPY sirve para dar el formato de de copyright.
+        -->
+        <p>&COPY 2026 | Todos los derechos reservados.</p>
+    </footer>
+
+    <!--Codigo en JavaScript donde se pueden realizar operaciones dentro del HTML y cambiar aspectos o funcionalidades en la página. -->
+    <script>
+        /*Primero capturamos todos los elementos que vamos a utilizar, es mejor tenerlos de manera global y utilizarlos por varias partes que buscar con el DOM en cada función.*/
+
+        const inputAltura = document.getElementById('inputAltura'); //Así obtenemos un objeto (elemento) del documento HTML, con ayuda del id.
+        const inputPeso = document.getElementById('inputPeso');//Así obtenemos un objeto (elemento) del documento HTML, con ayuda del id.
+        const btnCalcImc = document.getElementById('btn_calcularImc');//Así obtenemos un objeto (elemento) del documento HTML, con ayuda del id.
+        const campoResultado = document.getElementById('resultado_imc');//Así obtenemos un objeto (elemento) del documento HTML, con ayuda del id.
+
+        /*Llamamos al primer input de peso para que tenga un evento de escucha (addEventListener()), para que por cada tecla que se presione realice la siguiente acción pasamos como parametro de la función el evento que se realiza*/
+        inputPeso.addEventListener('keydown', function(e){
+            if(e.key === "e" || e.key === "E" || e.key === "-" || e.key === "+"){//si se presiona la tecla e "euler en númerico" o "E" o "-" o "+"
+                e.preventDefault(); //bloquear esa tecla para que no se digite en el input.
+            }
+        });
+
+        /*Llamamos al segundo input de altura para que tenga un evento de escucha (addEventListener()), para que por cada tecla que se presione realice la siguiente acción pasamos como parametro de la función el evento que se realiza*/
+        inputAltura.addEventListener('keydown', function(e){
+            if(e.key === "e" || e.key === "E" || e.key === "-" || e.key === "+"){//si se presiona cualquier tecla de "e" "euler en númerico" o "E" o "-" o "+".
+                e.preventDefault(); //bloquear esa tecla para que no se digite en el input.
+            }
+        });
+
+        /*Llamamos al elemento boton, en donde escucha la acción de dar click en ese botón, realizara dos acciones diferentes, porlo que separamos en una función aparte para distinguir la funcionalidad.*/
+        btnCalcImc.addEventListener('click', function(event){ //Capturamos el evento del click.
+            event.preventDefault(); //Eliminamos todas las advertencias por defecto que generan los campos, como por ejemplo el decimal con el ".".
+            calcularImc(); //Llamamos a la función calcularIMC()
+        });
+                
+        /*Funcion de calcularIMC donde se hace todo el proceso de calcular y mostrar.
+        Nota: Se puede separar la funcion de calcular con mostrar en HTML, por lo que hacen funcionalidades aparte.*/
+        function calcularImc(){                         
+
+            let peso = parseFloat(inputPeso.value)||0; //creamos una variable que se puede modificar y le asignamos el parceo o la conversión del valor que tenga el inputPeso o de lo contrario si no hace la conversión le asigne 0.
+            let altura = parseFloat(inputAltura.value)||0; //creamos una variable que se puede modificar y le asignamos el parceo o la conversión del valor que tenga el inputAltura o de lo contrario si no hace la conversión le asigne 0.
+
+
+            /*Por medio de un condicional validamos si el peso y la altura es diferente a 0 para hacer el proceso de calular el IMC.
+            De lo contrario no hará el calculo y mostrará un mensaje*/
+            if(peso != 0 && altura != 0){
+                //Caturamos en una variable imc, el calculo del peso sobre altura al cuadrado, lo que nos daría el Indice de Masa Corporal.
+                let imc = peso/(altura*altura);
+
+                //Creamos dos variables: una "textoMostrar" para asignarle en valor de texto el mensaje que se muestra según el IMC. Y otro para "tipoImagen", para cambiar de forma dinamica la imagen a mostrar según el IMC.
+                let textoMostrar;
+                let tipoImagen;
+
+                //Condicional donde validamos si el IMC esta por debajo de 18.5.
+                if(imc<18.5){
+                    //Le asignamos a textoMostrar indicando que el IMC es bajo y que hay que alimentarse más.
+                    textoMostrar = "Peso bajo, debe comer alimentos altos en proteina y no hacer mucho cardio.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es BajoPeso.
+                    tipoImagen = "BajoPeso";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 18.5 y el IMC es menor a 25
+                if(imc>=18.5 && imc<25){
+                    //Le asignamos a textoMostrar indicando que el IMC normal y que todo está bien.
+                    textoMostrar = "IMC normal, excelente, pero sigue conservando tu figura con comida saludable y buen ejercicio.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es Normal.
+                    tipoImagen = "Normal";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 25 y el IMC es menor a 30
+                if(imc>=25 && imc<30){
+                    //Le asignamos a textoMostrar indicando que el IMC indica Sobrepeso y que toca realizar actividad física.
+                    textoMostrar = "Sobrepeso, ten una rutina de ejercicio para bajar de peso, empieza a comer ensaladas y evita comer comida chatarra. ";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es SobrePeso.
+                    tipoImagen = "SobrePeso";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 30 y el IMC es menor a 35
+                if(imc>=30 && imc<35){
+                    //Le asignamos a textoMostrar indicando que el IMC indica Obesidad I y que toca realizar actividad física y dieta.
+                    textoMostrar = "Obesidad I, haz ejercicio con cardio y ten una dieta balanceada, asegurate de hidratarte bien e intentar evitar comidas rapidas y grasas.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es Obesidad1.
+                    tipoImagen = "Obesidad1";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 35 y el IMC es menor a 40
+                if(imc>=35 && imc<40){
+                    //Le asignamos a textoMostrar indicando que el IMC indica Obesidad II y que toca realizar actividad física y dieta.
+                    textoMostrar = "Obesidad II, haz cardio 2 a 3 veces por semana, combinandolo con el ejercicio de pesas. Come comida saludable como ensaladas, jugos naturales, fruta y no comas comidas rapidas, paquetes, fritos, etc.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es Obesidad2.
+                    tipoImagen = "Obesidad2";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 40 y el IMC es menor a 50
+                if(imc>=40 && imc<50){
+                    //Le asignamos a textoMostrar indicando que el IMC indica Obesidad III y que toca realizar actividad física y dieta.
+                    textoMostrar = "Obesidad III, haz cardio 1 hora de 3 a 4 veces por semana, combinandolo con el ejercicio de pesas progresivas. Come comida saludable como ensaladas, jugos naturales, fruta y no comas comidas rapidas, paquetes, fritos, etc.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es Obesidad3.
+                    tipoImagen = "Obesidad3";
+                }
+                //Condicional donde validamos si el IMC es igual o mayor a 50
+                if(imc>=50){
+                    //Le asignamos a textoMostrar indicando que el IMC indica Obesidad III y que toca realizar actividad física y dieta.
+                    textoMostrar = "Obesidad IV, haz cardio 1 hora de 5 a 7 veces por semana, combinandolo con el ejercicio de pesas progresivas. Come comida saludable como ensaladas, jugos naturales, fruta y no comas comidas rapidas, paquetes, fritos, etc.";
+                    //Asignamos a tipoImagen el nombre de la imagen a mostrar en este caso es Obesidad3.
+                    tipoImagen = "Obesidad4";
+                }
+
+                //Luego de validar y almacenar en una variable lo que se va a mostrar de manera personalizable. Modificamos el contenido en HTML del elemento que contiene el resultado.
+                campoResultado.innerHTML = 
+                    "<p id=\"resultadoTexto\">Resultado IMC: "+ imc.toFixed(2) +"</p><img id = \"img_imc\" src = \"/Assets/Images/imc/"+tipoImagen+".webp\" alt = \"Imagen de IMC\"><p id=\"infoResultado\">"+ textoMostrar +"</p>";
+                //imc.toFixed, funciona para mostrar solo dos digitos despues de la coma, para darle formato al resultado en decimal.
+            }
+            else{
+                //En caso de no tener el peso o la altura o que alguno de los valores sean 0, modificamos el mismo campo div para mostrar un texto, con error
+                campoResultado.innerHTML = "<p id=\"errorText\">No se puede obtener el IMC sin un peso/altura.</p>";
+            }
+        }
+    </script>
+</html>

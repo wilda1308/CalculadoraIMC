@@ -1,0 +1,126 @@
+body{
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4ff;
+}
+
+header{
+    position: sticky;
+    top: 0;
+    background: #853afd;
+    padding: 20px;
+    color: #f4f4f4;
+    text-shadow: 0px 3px 5px #000000AA;
+    text-align: center;
+}
+
+main{
+    padding: 25px;
+    text-align: center;
+    background: #fAfAfA;
+}
+
+main section{
+    width: 90%;
+    margin: 20px auto 60px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 20px 5px rgba(0,0,0,0.1);
+}
+
+h2{
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #853afd;
+}
+
+label{
+    font-weight: bold;
+}
+
+#container_calcImc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    padding: 15px;
+}
+
+.input_imc{
+    width: 50px;
+    font-size: 15px;
+    margin-left: 5px;
+    border: none;
+    background: #dfdfdf;
+    border-radius: 10%;
+    text-align: center;
+}
+
+/*::placeholder, funciona para darle estilos al texto que se quita cuando digitamos un valor en el campo del input, en este caso estamos usando un selector de clase es decir ambos inputs tienen esta clase.*/
+.input_imc::placeholder{
+    color: #434343;
+}
+
+/*::FOCUS, funciona para darle estilos al input cuando le precionamos y estamos en ese input, en este caso estamos usando un selector de clase es decir ambos inputs tienen esta clase.*/
+.input_imc:focus{
+    border: 1px solid #853afd;
+    outline: none; /*outline, funciona para quitar el borde por defecto del navegador y poner uno personalizado*/
+    box-shadow: 0px 1px 5px #000000AA;
+}
+
+/*::-webkit-inner-spin-button, funciona para darle estilos especificamente a los botones o quitarlos del input, en este caso estamos usando un selector de clase es decir ambos inputs tienen esta clase.*/
+.input_imc::-webkit-inner-spin-button{
+    -webkit-appearance: none; /*Funciona para quitar los botones.*/
+}
+
+button{
+    border: none;
+    border-radius: 5%;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    box-shadow: 0px 0px 2px #000000;
+    color: white;
+    background: #853afd;
+    margin-bottom: 20px;
+    transition: 0.2s box-shadow ease;
+}
+/*:hover, funciona para darle estilos al selector de button (todos los botones) con sombreado y cursor cambie a mano apuntando cuando el mouse o ratón se ponga en cima del elemento button */
+button:hover{
+    cursor: pointer; /*Coloca el cursor con la mano señalando en el botón*/
+    box-shadow: 0px 0px 15px #000000;
+}
+
+#resultadoTexto{
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+}
+
+#infoResultado{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    color: #853afd;
+    text-shadow: 0px 3px 3px #00000055;
+}
+
+#errorText{
+    color: red;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#img_imc{
+    width: 10vh;
+}
+
+footer{
+    background: #853afd;
+    padding: 15px;
+    text-align: center;
+    color: #fAfAfA;
+}

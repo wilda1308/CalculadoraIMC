@@ -160,4 +160,4 @@ FIN
 ```
 
 
-<p>Desarrollado por Gomez Luna Valentina y Monroy Wilson David</p>
+<p style="text-align: center; font-weight: bold; font-style: italic">Desarrollado por Gomez Luna Valentina y Monroy Wilson David</p>

@@ -158,3 +158,6 @@ INICIO
   MOSTRAR imagen y mensaje de la categoría
 FIN
 ```
+
+
+<p>Desarrollado por Gomez Luna Valentina y Monroy Wilson David</p>
